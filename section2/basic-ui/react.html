@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EvenOdd</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="react-lib/react.development.js"></script>
+    <script src="react-lib/react-dom.development.js"></script>
+    <script>
+        const randomElement=Math.floor(Math.random()*100)+1;
+        const numberElement = React.createElement("h1",{style: {color :"red"}},`Generated Number:${randomElement}`);
+        const result = React.createElement("h2",{id:"text"},
+        randomElement % 2 === 0 ? "The number is even!" : "the number is odd!");
+        const checking =React.createElement("h1",{style:{color:"blue"}},randomElement % 2===0 ? "hello Even":"hello odd");
+       const root =ReactDOM.createRoot(document.getElementById("root"));
+       //<!-- root.render([numberElement,result]); -->
+        root.render(
+            React.createElement("div",null,[numberElement,result,checking])
+        );
+    </script>
+</body>
+</html>
