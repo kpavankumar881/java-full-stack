@@ -4,9 +4,10 @@ import { Product } from "../models/product";
 import { Dispatch } from "redux";
 import { setBasket } from "../../features/basket/basketSlice";
 import { createId } from "@paralleldrive/cuid2";
+import { apiBaseUrl } from "./apiConfig";
 
 class BasketService {
-    apiUrl = "http://localhost:8081/api/baskets";
+    apiUrl = `${apiBaseUrl}baskets`;
 
     async getBasketFromApi(){
         try{

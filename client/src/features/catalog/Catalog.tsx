@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect } from "react";
 import { Product } from "../../app/models/product";
 import ProductList from "./ProductList";
 import agent from "../../app/api/agent";
@@ -47,7 +47,7 @@ export default function Catalog(){
     .catch((error)=>console.error(error))
     .finally(()=>setLoading(false));
   }, [currentPage, pageSize]);
-  const loadProducts = (selectedSort, searchKeyword='') =>{
+  const loadProducts = (selectedSort: string, searchKeyword='') =>{
     setLoading(true);
     let page = currentPage -1;
     let size = pageSize;
@@ -114,7 +114,7 @@ export default function Catalog(){
       loadProducts(selectedSort);
     }    
   };
-  const handlePageChange = (event, page) =>{
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, page: number) =>{
     setCurrentPage(page);
   }
   if(!products) return <h3>Unable to load Products</h3>

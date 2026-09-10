@@ -4,9 +4,10 @@ import { toast } from "react-toastify";
 import basketService from "./basketService";
 import { Dispatch } from "redux";
 import { Product } from "../models/product";
-import { Basket } from "../models/basket";
+import type { Basket } from "../models/basket";
+import { apiBaseUrl } from "./apiConfig";
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:8081/api/";
+axios.defaults.baseURL = apiBaseUrl;
 
 const idle = () => new Promise(resolve => setTimeout(resolve, 100));
 const responseBody = (response: AxiosResponse) => response.data;
@@ -39,7 +40,7 @@ const requests = {
 }
 
 const Store = {
-    apiUrl: `${import.meta.env.VITE_API_URL || "http://localhost:8081/api/"}products`,
+  apiUrl: `${apiBaseUrl}products`,
     list:(page: number, size: number, brandId?: number, typeId?: number, url?: string)=> {
       let requestUrl = url || `products?page=${page-1}&size=${size}`;
       if(brandId!==undefined){
