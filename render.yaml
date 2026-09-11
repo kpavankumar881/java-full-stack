@@ -7,7 +7,7 @@ services:
     dockerContext: .
     envVars:
       - key: JAVA_VERSION
-        value: "21"
+        value: "17"
       - key: DB_URL
         sync: false
       - key: DB_USERNAME
