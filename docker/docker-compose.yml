@@ -8,7 +8,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ./data.sql:/docker-entrypoint-initdb.d/data.sql
       - sports-center-mysql-data:/var/lib/mysql

@@ -1,0 +1,54 @@
+services:
+  - type: web
+    name: sportscenter-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: JAVA_VERSION
+        value: "21"
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REDIS_HOST
+        fromService:
+          type: keyvalue
+          name: sportscenter-redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          type: keyvalue
+          name: sportscenter-redis
+          property: port
+      - key: CORS_ALLOWED_ORIGIN
+        fromService:
+          type: static_site
+          name: sportscenter-client
+          property: host
+
+  - type: static_site
+    name: sportscenter-client
+    rootDir: client
+    buildCommand: npm ci && npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: sportscenter-api
+          property: host
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  - type: keyvalue
+    name: sportscenter-redis
+    plan: free
+    ipAllowList: []
