@@ -19,12 +19,12 @@ public interface OrderMapper {
     @Mapping(source = "subTotal", target = "subTotal")
     @Mapping(source = "deliveryFee", target = "deliveryFee")
     @Mapping(target = "total", expression = "java(order.getSubTotal() + order.getDeliveryFee())")
-    @Mapping(target = "orderDate", expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "orderStatus", constant = "Pending")
+    @Mapping(source = "orderDate", target = "orderDate")
+    @Mapping(source = "orderStatus", target = "orderStatus")
     OrderResponse OrderToOrderResponse(Order order);
 
-    @Mapping(target = "orderDate", expression = "java(orderDto.getOrderDate())")
-    @Mapping(target = "orderStatus", constant = "Pending") // Reference enum constant directly
+    @Mapping(target = "orderDate", source = "orderDate")
+    @Mapping(target = "orderStatus", expression = "java(com.ecommerce.sportscenter.entity.OrderAggregate.OrderStatus.Pending)")
     Order orderResponseToOrder(OrderDto orderDto);
 
     List<OrderDto> ordersToOrderResponses(List<Order> orders);
