@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3307/sports-center}
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:password}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/sports_center}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
   application:
     name: SportsCenter
   jpa:
@@ -15,8 +15,9 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        globally_quoted_identifiers: true
 
   data:
     redis:
