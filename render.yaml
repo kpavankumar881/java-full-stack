@@ -27,26 +27,7 @@ services:
           name: sportscenter-redis
           property: port
       - key: CORS_ALLOWED_ORIGIN
-        fromService:
-          type: static_site
-          name: sportscenter-client
-          property: host
-
-  - type: static_site
-    name: sportscenter-client
-    rootDir: client
-    buildCommand: npm ci && npm run build
-    publishPath: dist
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: sportscenter-api
-          property: host
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+        sync: false
 
   - type: keyvalue
     name: sportscenter-redis
