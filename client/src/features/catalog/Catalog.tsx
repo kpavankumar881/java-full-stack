@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Product } from "../../app/models/product";
 import ProductList from "./ProductList";
 import agent from "../../app/api/agent";
@@ -47,12 +47,12 @@ export default function Catalog(){
     .catch((error)=>console.error(error))
     .finally(()=>setLoading(false));
   }, [currentPage, pageSize]);
-  const loadProducts = (selectedSort: string, searchKeyword='') =>{
+  const loadProducts = useCallback((selectedSort: string, searchKeyword='') =>{
     setLoading(true);
-    let page = currentPage -1;
-    let size = pageSize;
-    let brandId = selectedBrandId !==0 ? selectedBrandId : undefined;
-    let typeId = selectedTypeId !==0 ? selectedTypeId : undefined;
+    const page = currentPage -1;
+    const size = pageSize;
+    const brandId = selectedBrandId !==0 ? selectedBrandId : undefined;
+    const typeId = selectedTypeId !==0 ? selectedTypeId : undefined;
     const sort = "name";
     const order = selectedSort === "desc" ? "desc" : "asc"; 
     //construct the url
@@ -83,19 +83,19 @@ export default function Catalog(){
         .catch((error)=>console.error(error))
         .finally(()=> setLoading(false));
     }
-  }
+  }, [currentPage, pageSize, selectedBrandId, selectedTypeId]);
   //Trigger loadProducts wheneever selectedBrandId or selectedTypeId changes
   useEffect(()=>{
     loadProducts(selectedSort);
-  }, [selectedBrandId, selectedTypeId]);
+  }, [loadProducts, selectedBrandId, selectedTypeId, selectedSort]);
   
-  const handleSortChange = (event: any) =>{
+  const handleSortChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
     const selectedSort = event.target.value;
     setSelectedSort(selectedSort); 
     loadProducts(selectedSort);
   };
 
-  const handleBrandChange = (event: any) =>{
+  const handleBrandChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
     const selectedBrand = event.target.value;
     const brand = brands.find((b)=>b.name === selectedBrand);
     setSelectedBrand(selectedBrand)
@@ -105,7 +105,7 @@ export default function Catalog(){
     }    
   };
 
-  const handleTypeChange = (event: any) =>{
+  const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
     const selectedType = event.target.value;
     const type = types.find((t)=>t.name === selectedType);
     setSelectedType(selectedType)

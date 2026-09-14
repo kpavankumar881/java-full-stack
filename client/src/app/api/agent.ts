@@ -6,6 +6,7 @@ import { Dispatch } from "redux";
 import { Product } from "../models/product";
 import type { Basket } from "../models/basket";
 import { apiBaseUrl } from "./apiConfig";
+import type { FieldValues } from "react-hook-form";
 
 axios.defaults.baseURL = apiBaseUrl;
 
@@ -119,13 +120,28 @@ const Basket = {
 }
 
 const Account = {
-  login: (values:any) =>requests.post('auth/login', values)
+  login: (values: FieldValues) => requests.post('auth/login', values)
+}
+
+interface CreateOrderRequest {
+  basketId: string;
+  shippingAddress: {
+    name: string;
+    address1: string;
+    address2: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+  subTotal: number;
+  deliveryFee: number;
 }
 
 const Orders ={
   list:() => requests.get('orders'),
   fetch:(id:number) => requests.get(`orders/${id}`),
-  create:(values:any) => requests.post('orders', values)
+  create:(values: CreateOrderRequest) => requests.post('orders', values)
 }
 
 

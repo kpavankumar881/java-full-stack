@@ -23,8 +23,9 @@ export const signInUser = createAsyncThunk<User, FieldValues>(
             localStorage.setItem('user', JSON.stringify(user));
             return user;
         }
-        catch(error: any){
-            return thunkAPI.rejectWithValue({error: error.data})
+        catch(error: unknown){
+            const message = error instanceof Error ? error.message : 'Unable to sign in';
+            return thunkAPI.rejectWithValue({error: message})
         }
     }
 )

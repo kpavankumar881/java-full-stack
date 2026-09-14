@@ -36,6 +36,7 @@ public class Order {
     @Column(name="Order_Status")
     private OrderStatus orderStatus = OrderStatus.Pending;
     public Double getTotal() {
-        return getSubTotal()+getDeliveryFee();
+        return (getSubTotal() == null ? 0D : getSubTotal())
+                + (getDeliveryFee() == null ? 0L : getDeliveryFee());
     }
 }

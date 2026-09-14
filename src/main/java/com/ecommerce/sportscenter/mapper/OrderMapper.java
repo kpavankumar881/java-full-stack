@@ -18,7 +18,7 @@ public interface OrderMapper {
     @Mapping(source = "shippingAddress", target = "shippingAddress")
     @Mapping(source = "subTotal", target = "subTotal")
     @Mapping(source = "deliveryFee", target = "deliveryFee")
-    @Mapping(target = "total", expression = "java(order.getSubTotal() + order.getDeliveryFee())")
+    @Mapping(target = "total", expression = "java((order.getSubTotal() == null ? 0D : order.getSubTotal()) + (order.getDeliveryFee() == null ? 0L : order.getDeliveryFee()))")
     @Mapping(source = "orderDate", target = "orderDate")
     @Mapping(source = "orderStatus", target = "orderStatus")
     OrderResponse OrderToOrderResponse(Order order);

@@ -18,7 +18,7 @@ export default function Order(){
     if (loading) return <Spinner message="Loading orders..."/>
     
     // Function to convert order date to formatted string
-    function formatDate(orderDateArray:any) {
+    function formatDate(orderDateArray: unknown) {
         if (!Array.isArray(orderDateArray) || orderDateArray.length < 3) {
             return "Invalid Date";
         }

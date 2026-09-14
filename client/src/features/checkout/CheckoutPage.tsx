@@ -11,7 +11,7 @@ import {
   import AddressForm from "./AddressForm";
   import PaymentForm from "./PaymentForm";
   import Review from "./Review";
-  import { FormProvider, useForm } from "react-hook-form";
+  import { FieldValues, FormProvider, useForm } from "react-hook-form";
   import { yupResolver } from "@hookform/resolvers/yup";
   
   import { BasketItem } from "../../app/models/basket";
@@ -53,7 +53,7 @@ import { ValidationRules } from "./validationRules";
       if (isValid) {
         // Log form data before moving to the next step
         //console.log(methods.getValues());
-        const data: any = methods.getValues();
+        const data: FieldValues = methods.getValues();
         console.log(data);
         if (activeStep === steps.length - 1) {
           // If it's the last step, submit the order
@@ -96,7 +96,6 @@ import { ValidationRules } from "./validationRules";
               // Handle API call errors
               console.error("Error submitting the order:", error);
               toast.error("Failed to submit the order. Please try again.");
-            } finally {
             }
           } else {
             console.error("Basket not found in local storage.");
